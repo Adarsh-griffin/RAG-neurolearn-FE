@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { AnimatedHeroOverlay } from "@/components/AnimatedHeroOverlay";
 
 export function Home() {
   const features = [
