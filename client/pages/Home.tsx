@@ -41,7 +41,10 @@ export function Home() {
               EDUCATION
             </h1>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed font-light">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam
+              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
+              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+              tation.
             </p>
             <div className="flex gap-4 flex-wrap">
               <Link
@@ -78,7 +81,9 @@ export function Home() {
                 <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {feature.description}
+                </p>
               </Link>
             ))}
           </div>
@@ -92,7 +97,8 @@ export function Home() {
             Ready to Start Learning?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join our platform and begin your journey to mastering new skills and knowledge.
+            Join our platform and begin your journey to mastering new skills and
+            knowledge.
           </p>
           <Link
             to="/upload"

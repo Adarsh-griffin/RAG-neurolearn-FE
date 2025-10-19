@@ -18,47 +18,79 @@ export function AnimatedHeroOverlay() {
 
       {/* Boy's Eyes - Blinking Animation */}
       {/* Left Eye */}
-      <g className="animate-boy-blink" style={{ transformOrigin: "180px 140px" }}>
+      <g
+        className="animate-boy-blink"
+        style={{ transformOrigin: "180px 140px" }}
+      >
         <ellipse cx="175" cy="140" rx="6" ry="8" fill="#000" opacity="0.8" />
       </g>
 
       {/* Right Eye */}
-      <g className="animate-boy-blink" style={{ transformOrigin: "220px 140px" }}>
+      <g
+        className="animate-boy-blink"
+        style={{ transformOrigin: "220px 140px" }}
+      >
         <ellipse cx="220" cy="140" rx="6" ry="8" fill="#000" opacity="0.8" />
       </g>
 
       {/* Boy's Head - Gentle Nod */}
-      <g className="animate-head-nod" style={{ transformOrigin: "195px 130px" }}>
+      <g
+        className="animate-head-nod"
+        style={{ transformOrigin: "195px 130px" }}
+      >
         {/* This group encompasses head movements */}
         <circle cx="195" cy="130" r="25" fill="none" stroke="none" />
       </g>
 
       {/* Boy's Finger - Tapping Animation */}
-      <g className="animate-finger-tap" style={{ transformOrigin: "250px 200px" }}>
+      <g
+        className="animate-finger-tap"
+        style={{ transformOrigin: "250px 200px" }}
+      >
         <rect x="250" y="200" width="4" height="15" fill="#333" rx="2" />
       </g>
 
       {/* Robot - Floating Animation */}
-      <g className="animate-float-robot" style={{ transformOrigin: "650px 220px" }}>
+      <g
+        className="animate-float-robot"
+        style={{ transformOrigin: "650px 220px" }}
+      >
         {/* Robot body container */}
         <circle cx="650" cy="220" r="2" fill="none" stroke="none" />
 
         {/* Antenna - Wiggling */}
-        <g className="animate-wiggle-antenna" style={{ transformOrigin: "650px 190px" }}>
-          <line x1="650" y1="190" x2="650" y2="160" stroke="#333" strokeWidth="2" />
+        <g
+          className="animate-wiggle-antenna"
+          style={{ transformOrigin: "650px 190px" }}
+        >
+          <line
+            x1="650"
+            y1="190"
+            x2="650"
+            y2="160"
+            stroke="#333"
+            strokeWidth="2"
+          />
           <circle cx="650" cy="155" r="4" fill="#E65A5A" />
         </g>
       </g>
 
       {/* Video Player - Play Button Pulsing */}
-      <g className="animate-pulse-play" style={{ transformOrigin: "520px 180px" }}>
+      <g
+        className="animate-pulse-play"
+        style={{ transformOrigin: "520px 180px" }}
+      >
         {/* Play button circle */}
-        <circle cx="520" cy="180" r="20" fill="#fff" stroke="#E65A5A" strokeWidth="2" />
-        {/* Play triangle */}
-        <polygon
-          points="515,170 515,190 535,180"
-          fill="#E65A5A"
+        <circle
+          cx="520"
+          cy="180"
+          r="20"
+          fill="#fff"
+          stroke="#E65A5A"
+          strokeWidth="2"
         />
+        {/* Play triangle */}
+        <polygon points="515,170 515,190 535,180" fill="#E65A5A" />
       </g>
 
       {/* Video Progress Bar - Sliding Animation */}
@@ -119,7 +151,10 @@ export function AnimatedHeroOverlay() {
       </g>
 
       {/* Subtle breathing/sway for the entire scene */}
-      <g className="animate-boy-sway" style={{ transformOrigin: "400px 300px" }}>
+      <g
+        className="animate-boy-sway"
+        style={{ transformOrigin: "400px 300px" }}
+      >
         {/* This encompasses subtle movement of the scene */}
         <circle cx="400" cy="300" r="1" fill="none" stroke="none" />
       </g>

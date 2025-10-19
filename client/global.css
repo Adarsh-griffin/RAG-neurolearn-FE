@@ -122,7 +122,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -131,7 +132,8 @@
 }
 
 @keyframes float-robot {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -140,7 +142,8 @@
 }
 
 @keyframes wiggle-antenna {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg);
   }
   25% {
@@ -152,7 +155,8 @@
 }
 
 @keyframes boy-sway {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0px) translateY(0px);
   }
   50% {
@@ -161,16 +165,20 @@
 }
 
 @keyframes boy-blink {
-  0%, 49%, 100% {
+  0%,
+  49%,
+  100% {
     opacity: 1;
   }
-  50%, 99% {
+  50%,
+  99% {
     opacity: 0;
   }
 }
 
 @keyframes head-nod {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotateZ(0deg);
   }
   25% {
@@ -182,7 +190,8 @@
 }
 
 @keyframes finger-tap {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -191,7 +200,8 @@
 }
 
 @keyframes pulse-play {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
     filter: drop-shadow(0 0 2px rgba(230, 90, 90, 0.3));
@@ -213,7 +223,8 @@
 }
 
 @keyframes data-flow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.2;
     stroke-dashoffset: 0;
   }
@@ -224,7 +235,8 @@
 }
 
 @keyframes video-shimmer {
-  0%, 100% {
+  0%,
+  100% {
     background-position: -1000px 0;
   }
   100% {
