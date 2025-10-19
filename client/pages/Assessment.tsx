@@ -5,28 +5,28 @@ export function AssessmentPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center py-20">
-          <div className="text-6xl mb-4">📝</div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">Knowledge Assessment</h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Test your understanding with AI-generated questions and get intelligent feedback
+          <div className="text-6xl mb-6">📝</div>
+          <h1 className="text-4xl font-light text-foreground mb-4 tracking-wide">ASSESSMENT</h1>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto font-light">
+            Test your understanding with generated questions and get intelligent feedback
             based on your responses.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
               to="/learning"
-              className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+              className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               Start Assessment
             </Link>
             <Link
               to="/"
-              className="px-8 py-3 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary/5 transition-colors"
+              className="px-8 py-3 border-2 border-border text-foreground rounded-lg font-semibold hover:bg-muted/50 transition-colors"
             >
               Back to Home
             </Link>
           </div>
 
-          <div className="mt-16 bg-gray-50 rounded-lg p-8 text-left max-w-3xl mx-auto">
+          <div className="mt-16 bg-muted/20 rounded-lg p-8 text-left max-w-3xl mx-auto border border-border">
             <h3 className="font-semibold text-foreground mb-8 text-lg">
               3-Step Assessment Flow:
             </h3>
@@ -40,11 +40,10 @@ export function AssessmentPage() {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground mb-2">Generate Question</h4>
-                    <p className="text-muted-foreground text-sm mb-3">
-                      Click the "Generate Question" button to get an AI-created question based
-                      on the material you've learned.
+                    <p className="text-muted-foreground text-sm mb-3 font-light">
+                      Click the "Generate Question" button to get a question based on the material you've learned.
                     </p>
-                    <button className="px-4 py-2 border border-primary/30 text-primary rounded-lg text-sm font-medium hover:bg-primary/5 transition-colors">
+                    <button className="px-4 py-2 border border-border text-foreground rounded-lg text-sm font-medium hover:bg-muted/50 transition-colors">
                       Generate Question
                     </button>
                   </div>
@@ -59,9 +58,8 @@ export function AssessmentPage() {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground mb-2">Answer & Submit</h4>
-                    <p className="text-muted-foreground text-sm mb-3">
-                      Type your answer in the textarea and click "Submit Answer" to send your
-                      response for evaluation.
+                    <p className="text-muted-foreground text-sm mb-3 font-light">
+                      Type your answer in the textarea and click "Submit Answer".
                     </p>
                     <div className="space-y-3">
                       <textarea
@@ -69,7 +67,7 @@ export function AssessmentPage() {
                         className="w-full p-3 border border-border rounded-lg text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                         rows={4}
                       />
-                      <button className="w-full px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                      <button className="w-full px-4 py-2 bg-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
                         Submit Answer
                       </button>
                     </div>
@@ -84,12 +82,11 @@ export function AssessmentPage() {
                     3
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-2">AI Feedback & Evaluation</h4>
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Receive detailed feedback from our AI tutor with explanations and suggestions
-                      for improvement.
+                    <h4 className="font-semibold text-foreground mb-2">Feedback & Evaluation</h4>
+                    <p className="text-muted-foreground text-sm mb-4 font-light">
+                      Receive detailed feedback with explanations and suggestions for improvement.
                     </p>
-                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                    <div className="bg-secondary/10 rounded-lg p-4 border border-secondary/30">
                       <div className="flex items-start gap-3 mb-3">
                         <span className="text-2xl">✓</span>
                         <div>
@@ -99,7 +96,7 @@ export function AssessmentPage() {
                           </p>
                         </div>
                       </div>
-                      <div className="bg-white rounded p-3 border border-green-100 mt-3">
+                      <div className="bg-white rounded p-3 border border-secondary/20 mt-3">
                         <p className="text-xs font-medium text-muted-foreground mb-2">
                           Key Points Covered:
                         </p>
@@ -117,8 +114,8 @@ export function AssessmentPage() {
 
             {/* Progressive Disclosure Note */}
             <div className="mt-8 pt-8 border-t border-border">
-              <div className="bg-blue-50 rounded-lg p-4 border border-primary/20">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-muted/50 rounded-lg p-4 border border-border">
+                <p className="text-sm text-muted-foreground font-light">
                   <strong>Progressive Disclosure:</strong> Each step is revealed after completion,
                   keeping the interface clean and focused on the current task.
                 </p>
@@ -126,27 +123,27 @@ export function AssessmentPage() {
             </div>
           </div>
 
-          <div className="mt-12 bg-amber-50 rounded-lg p-8 border border-amber-200 max-w-3xl mx-auto">
+          <div className="mt-12 bg-muted/20 rounded-lg p-8 border border-border max-w-3xl mx-auto">
             <h4 className="font-semibold text-foreground mb-4">Assessment Features:</h4>
-            <ul className="space-y-3 text-muted-foreground text-left">
+            <ul className="space-y-3 text-muted-foreground text-left text-sm">
               <li className="flex items-center gap-3">
-                <span className="text-amber-600">→</span>
-                <span>AI-generated questions tailored to your learning material</span>
+                <span className="text-primary font-bold">→</span>
+                <span>Generated questions tailored to your learning material</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-amber-600">→</span>
+                <span className="text-primary font-bold">→</span>
                 <span>Real-time evaluation and feedback</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-amber-600">→</span>
+                <span className="text-primary font-bold">→</span>
                 <span>Detailed explanations for incorrect answers</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-amber-600">→</span>
+                <span className="text-primary font-bold">→</span>
                 <span>Progress tracking and performance analytics</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-amber-600">→</span>
+                <span className="text-primary font-bold">→</span>
                 <span>Adaptive difficulty based on performance</span>
               </li>
             </ul>
