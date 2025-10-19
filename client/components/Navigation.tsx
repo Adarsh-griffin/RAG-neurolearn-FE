@@ -18,18 +18,6 @@ export function Navigation() {
               to="/"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Products
-            </Link>
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-            >
-              Company
-            </Link>
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-            >
               Contact us
             </Link>
           </div>
