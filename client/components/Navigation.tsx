@@ -1,57 +1,55 @@
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
 
 export function Navigation() {
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="w-8 h-8 bg-accent rounded-sm flex items-center justify-center text-white text-sm font-bold">
-              🧠
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <div className="px-3 py-1.5 bg-primary text-white rounded-sm text-xs font-bold tracking-wide">
+              LOGO
             </div>
-            <span className="text-foreground">NeuroLearn</span>
           </Link>
 
-          <div className="hidden md:flex gap-8">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex gap-12">
             <Link
               to="/"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Home
+              Products
             </Link>
             <Link
-              to="/upload"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              to="/"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Upload
+              Company
             </Link>
             <Link
-              to="/qa"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              to="/"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Q&A
-            </Link>
-            <Link
-              to="/learning"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Learning
-            </Link>
-            <Link
-              to="/assessment"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Assessment
+              Contact us
             </Link>
           </div>
 
-          <div className="hidden md:flex gap-4">
-            <button className="text-sm font-medium text-primary hover:underline">
-              Sign in
-            </button>
-            <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-              Get Started
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button className="text-foreground hover:text-primary transition-colors">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
             </button>
           </div>
         </div>
