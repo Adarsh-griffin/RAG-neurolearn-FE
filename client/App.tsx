@@ -9,38 +9,53 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Home } from "./pages/Home";
-import { UploadPage } from "./pages/Upload";
-import { QAPage } from "./pages/QA";
-import { LearningPage } from "./pages/Learning";
+import { StudyPage } from "./pages/Study";
 import { AssessmentPage } from "./pages/Assessment";
 import NotFound from "./pages/NotFound";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          <Navigation />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/upload" element={<UploadPage />} />
-              <Route path="/qa" element={<QAPage />} />
-              <Route path="/learning" element={<LearningPage />} />
-              <Route path="/assessment" element={<AssessmentPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Clear localStorage on page load/refresh
+  useEffect(() => {
+    localStorage.clear();
+    console.log('🗑️ localStorage cleared on page load');
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={
+              <div className="flex flex-col min-h-screen">
+                <Navigation />
+                <main className="flex-1">
+                  <Home />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="/study" element={<StudyPage />} />
+            <Route path="/assessment" element={
+              <div className="flex flex-col min-h-screen">
+                <Navigation />
+                <main className="flex-1">
+                  <AssessmentPage />
+                </main>
+                <Footer />
+              </div>
+            } />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 createRoot(document.getElementById("root")!).render(<App />);

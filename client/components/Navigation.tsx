@@ -2,46 +2,55 @@ import { Link } from "react-router-dom";
 
 export function Navigation() {
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="px-3 py-1.5 bg-primary text-white rounded-sm text-xs font-bold tracking-wide">
-              LOGO
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-12">
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-            >
-              Contact us
+    <div className="sticky top-0 z-50 bg-gradient-to-r ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        <div className="bg-white rounded-full px-6 py-2 bg-gradient-to-r from-purple-50 to-blue-100 shadow-lg">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/favicon.ico" alt="NeuroLearn" className="w-6 h-6 rounded-md" />
+              <span className="text-lg font-black tracking-wider text-gray-800" style={{fontFamily: 'Arial Black, sans-serif'}}>
+                NEUROLEARN
+              </span>
             </Link>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button className="text-foreground hover:text-primary transition-colors">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-6">
+              <Link
+                to="/login"
+                className="text-sm text-gray-600 hover:text-gray-800 transition-colors font-medium"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+                Login
+              </Link>
+              <Link
+                to="/study"
+                className="px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full font-semibold hover:opacity-90 transition-opacity shadow-md"
+              >
+                Start Now
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button className="text-gray-600 hover:text-gray-800 transition-colors">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 }

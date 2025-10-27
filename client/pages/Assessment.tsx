@@ -1,152 +1,318 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { apiService, AssessmentQuestion, AssessmentFeedback } from "../lib/api";
+import { BookOpen, CheckCircle, XCircle, RotateCcw, ArrowLeft } from "lucide-react";
+
+type AssessmentState = 'welcome' | 'question' | 'answer' | 'feedback';
 
 export function AssessmentPage() {
+  const navigate = useNavigate();
+  const [currentState, setCurrentState] = useState<AssessmentState>('welcome');
+  const [question, setQuestion] = useState<string>('');
+  const [userAnswer, setUserAnswer] = useState<string>('');
+  const [feedback, setFeedback] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+
+  const generateQuestion = async () => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const response: AssessmentQuestion = await apiService.generateAssessment();
+      setQuestion(response.question);
+      setCurrentState('question');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate question');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const submitAnswer = async () => {
+    if (!userAnswer.trim()) {
+      setError('Please enter an answer before submitting');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    try {
+      const response: AssessmentFeedback = await apiService.submitAssessment(question, userAnswer);
+      setFeedback(response.feedback);
+      setCurrentState('feedback');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit answer');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetAssessment = () => {
+    setQuestion('');
+    setUserAnswer('');
+    setFeedback('');
+    setError('');
+    setCurrentState('welcome');
+  };
+
+  const startAnswering = () => {
+    setCurrentState('answer');
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center py-20">
-          <div className="text-6xl mb-6">📝</div>
-          <h1 className="text-4xl font-light text-foreground mb-4 tracking-wide">ASSESSMENT</h1>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto font-light">
-            Test your understanding with generated questions and get intelligent feedback
-            based on your responses.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              to="/learning"
-              className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
-            >
-              Start Assessment
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8">
             <Link
               to="/"
-              className="px-8 py-3 border-2 border-border text-foreground rounded-lg font-semibold hover:bg-muted/50 transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
             >
-              Back to Home
+            <ArrowLeft size={20} />
+            <span className="text-sm font-medium">Back to Home</span>
             </Link>
+          <div className="h-4 w-px bg-gray-300"></div>
+          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+            <BookOpen size={28} className="text-indigo-600" />
+            Assessment Center
+          </h1>
           </div>
 
-          <div className="mt-16 bg-muted/20 rounded-lg p-8 text-left max-w-3xl mx-auto border border-border">
-            <h3 className="font-semibold text-foreground mb-8 text-lg">
-              3-Step Assessment Flow:
-            </h3>
+        {/* Error Display */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-2">
+              <XCircle size={20} className="text-red-600" />
+              <p className="text-red-800 font-medium">Error</p>
+            </div>
+            <p className="text-red-700 mt-1">{error}</p>
+          </div>
+        )}
 
-            <div className="space-y-6">
-              {/* Step 1 */}
-              <div className="bg-white rounded-lg p-6 border-l-4 border-primary">
-                <div className="flex items-start gap-4">
-                  <div className="text-2xl font-bold text-primary bg-primary/10 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    1
+        {/* Welcome State */}
+        {currentState === 'welcome' && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <BookOpen size={40} className="text-indigo-600" />
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-2">Generate Question</h4>
-                    <p className="text-muted-foreground text-sm mb-3 font-light">
-                      Click the "Generate Question" button to get a question based on the material you've learned.
-                    </p>
-                    <button className="px-4 py-2 border border-border text-foreground rounded-lg text-sm font-medium hover:bg-muted/50 transition-colors">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Ready for Assessment?</h2>
+              <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Test your understanding with AI-generated questions based on your latest uploaded document. 
+                Get personalized feedback and improve your learning.
+              </p>
+              
+              <div className="space-y-4">
+                <button
+                  onClick={generateQuestion}
+                  disabled={isLoading}
+                  className="w-full max-w-md mx-auto px-8 py-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Generating Question...
+                    </>
+                  ) : (
+                    <>
+                      <BookOpen size={20} />
                       Generate Question
+                    </>
+                  )}
                     </button>
+                
+                <p className="text-sm text-gray-500">
+                  Questions are generated from your most recently uploaded document
+                </p>
                   </div>
                 </div>
               </div>
+        )}
 
-              {/* Step 2 */}
-              <div className="bg-white rounded-lg p-6 border-l-4 border-primary">
-                <div className="flex items-start gap-4">
-                  <div className="text-2xl font-bold text-primary bg-primary/10 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+        {/* Question State */}
+        {currentState === 'question' && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
+                  1
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">Generated Question</h2>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-6 border-l-4 border-indigo-500">
+                <p className="text-lg text-gray-800 leading-relaxed">{question}</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={startAnswering}
+                className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+              >
+                <CheckCircle size={20} />
+                Start Answering
+              </button>
+              <button
+                onClick={resetAssessment}
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center gap-2"
+              >
+                <RotateCcw size={20} />
+                New Question
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Answer State */}
+        {currentState === 'answer' && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
                     2
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-2">Answer & Submit</h4>
-                    <p className="text-muted-foreground text-sm mb-3 font-light">
-                      Type your answer in the textarea and click "Submit Answer".
-                    </p>
-                    <div className="space-y-3">
-                      <textarea
-                        placeholder="Enter your answer here..."
-                        className="w-full p-3 border border-border rounded-lg text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-                        rows={4}
-                      />
-                      <button className="w-full px-4 py-2 bg-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
-                        Submit Answer
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <h2 className="text-xl font-semibold text-gray-800">Your Answer</h2>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-4 mb-6 border-l-4 border-indigo-500">
+                <p className="text-sm text-gray-600 mb-2">Question:</p>
+                <p className="text-gray-800">{question}</p>
               </div>
 
-              {/* Step 3 */}
-              <div className="bg-white rounded-lg p-6 border-l-4 border-primary">
-                <div className="flex items-start gap-4">
-                  <div className="text-2xl font-bold text-primary bg-primary/10 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    3
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-2">Feedback & Evaluation</h4>
-                    <p className="text-muted-foreground text-sm mb-4 font-light">
-                      Receive detailed feedback with explanations and suggestions for improvement.
-                    </p>
-                    <div className="bg-secondary/10 rounded-lg p-4 border border-secondary/30">
-                      <div className="flex items-start gap-3 mb-3">
-                        <span className="text-2xl">✓</span>
-                        <div>
-                          <p className="font-semibold text-foreground text-sm">Great Answer!</p>
-                          <p className="text-muted-foreground text-xs mt-1">
-                            Your understanding is excellent. You correctly identified...
-                          </p>
-                        </div>
-                      </div>
-                      <div className="bg-white rounded p-3 border border-secondary/20 mt-3">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">
-                          Key Points Covered:
-                        </p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          <li>• Correct conceptual understanding</li>
-                          <li>• Proper use of terminology</li>
-                          <li>• Well-structured explanation</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="space-y-4">
+                <label className="block">
+                  <span className="text-sm font-medium text-gray-700 mb-2 block">Your Answer:</span>
+                      <textarea
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                    placeholder="Type your answer here..."
+                    className="w-full p-4 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    rows={6}
+                  />
+                </label>
               </div>
             </div>
 
-            {/* Progressive Disclosure Note */}
-            <div className="mt-8 pt-8 border-t border-border">
-              <div className="bg-muted/50 rounded-lg p-4 border border-border">
-                <p className="text-sm text-muted-foreground font-light">
-                  <strong>Progressive Disclosure:</strong> Each step is revealed after completion,
-                  keeping the interface clean and focused on the current task.
-                </p>
+            <div className="flex gap-4">
+              <button
+                onClick={submitAnswer}
+                disabled={isLoading || !userAnswer.trim()}
+                className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle size={20} />
+                        Submit Answer
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => setCurrentState('question')}
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Back to Question
+                      </button>
+                    </div>
+          </div>
+        )}
+
+        {/* Feedback State */}
+        {currentState === 'feedback' && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
+                  3
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">Assessment Feedback</h2>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-4 mb-6 border-l-4 border-indigo-500">
+                <p className="text-sm text-gray-600 mb-2">Question:</p>
+                <p className="text-gray-800 mb-4">{question}</p>
+                <p className="text-sm text-gray-600 mb-2">Your Answer:</p>
+                <p className="text-gray-800">{userAnswer}</p>
+              </div>
+
+              <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
+                <div className="flex items-start gap-3 mb-4">
+                  <CheckCircle size={24} className="text-green-600 mt-1" />
+                  <h3 className="text-lg font-semibold text-green-800">AI Tutor Feedback</h3>
+                </div>
+                <div className="prose prose-sm max-w-none">
+                  <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{feedback}</p>
+                  </div>
+                </div>
+              </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={resetAssessment}
+                className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+              >
+                <RotateCcw size={20} />
+                New Assessment
+              </button>
+              <button
+                onClick={() => setCurrentState('answer')}
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Assessment Features */}
+        <div className="mt-12 bg-white rounded-xl shadow-lg p-8">
+          <h3 className="text-xl font-semibold text-gray-800 mb-6">Assessment Features</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <BookOpen size={16} className="text-indigo-600" />
+                  </div>
+                        <div>
+                  <h4 className="font-semibold text-gray-800">AI-Generated Questions</h4>
+                  <p className="text-sm text-gray-600">Questions tailored to your uploaded documents</p>
+                        </div>
+                      </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle size={16} className="text-indigo-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">Instant Feedback</h4>
+                  <p className="text-sm text-gray-600">Get detailed explanations and corrections</p>
+                      </div>
+                    </div>
+                  </div>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <RotateCcw size={16} className="text-indigo-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">Unlimited Practice</h4>
+                  <p className="text-sm text-gray-600">Generate new questions anytime</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <XCircle size={16} className="text-indigo-600" />
+            </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">Constructive Criticism</h4>
+                  <p className="text-sm text-gray-600">Learn from mistakes with helpful guidance</p>
               </div>
             </div>
           </div>
-
-          <div className="mt-12 bg-muted/20 rounded-lg p-8 border border-border max-w-3xl mx-auto">
-            <h4 className="font-semibold text-foreground mb-4">Assessment Features:</h4>
-            <ul className="space-y-3 text-muted-foreground text-left text-sm">
-              <li className="flex items-center gap-3">
-                <span className="text-primary font-bold">→</span>
-                <span>Generated questions tailored to your learning material</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-primary font-bold">→</span>
-                <span>Real-time evaluation and feedback</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-primary font-bold">→</span>
-                <span>Detailed explanations for incorrect answers</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-primary font-bold">→</span>
-                <span>Progress tracking and performance analytics</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-primary font-bold">→</span>
-                <span>Adaptive difficulty based on performance</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
